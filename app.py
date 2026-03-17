@@ -47,7 +47,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# MediaPipe Setup
+# --- UPDATED MEDIAPIPE SETUP FOR CLOUD ---
 mp_face_mesh = mp.solutions.face_mesh
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -69,7 +69,7 @@ def play_alarm():
     """
     st.components.v1.html(alarm_html, height=0)
 
-# 2. SESSION STATE & AUTO-START (19:00 to 10:00)
+# 2. SESSION STATE & AUTO-START
 if "run_monitor" not in st.session_state:
     st.session_state.run_monitor = False
 
@@ -126,13 +126,11 @@ with col_cam:
                 rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results = face_mesh.process(rgb_frame)
 
-                # Simple Timestamp
                 ts = datetime.now().strftime("%H:%M:%S")
                 cv2.putText(frame, ts, (width-70, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
 
                 if results.multi_face_landmarks:
                     for face_landmarks in results.multi_face_landmarks:
-                        # Draw standard landmarks (Green/Cyan)
                         mp_drawing.draw_landmarks(
                             image=frame,
                             landmark_list=face_landmarks,
